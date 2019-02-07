@@ -9,7 +9,6 @@ const useResub = (Store, getKey, functionOptions) => {
   }
    // An alternative to useState would be preferable because it is dependent on call order
   const stateValues = useState(getTheValue())
-  // An alternative to useEffect that does not resubscribe on every render would be prefereable
   useEffect(() => {
     const subscriptionId = Store.subscribe(() => {
       stateValues[1](getTheValue())
@@ -17,7 +16,7 @@ const useResub = (Store, getKey, functionOptions) => {
     return () => {
       Store.unsubscribe(subscriptionId)
     }
-  })
+  }, [getKey])
   return stateValues
 }
 
